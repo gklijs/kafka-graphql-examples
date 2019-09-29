@@ -12,16 +12,11 @@
                  [re-graph "0.1.11" :exclusions [args4j]]
                  [bidi "2.1.6"]
                  [kibu/pushy "0.3.8"]]
-  :plugins [[lein-cljsbuild "1.1.5"]
-            [lein-sass "0.5.0"]]
+  :plugins [[lein-cljsbuild "1.1.5"]]
   :min-lein-version "2.5.3"
   :source-paths ["src/clj"]
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target" "resources/public/css"]
+  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
   :figwheel {:css-dirs ["resources/public/css"]}
-  :sass {:src              "resources/app/stylesheets"
-         :output-directory "resources/public/css"
-         :source-maps      false
-         :command          :sassc}
   :profiles
   {:dev
    {:dependencies [[binaryage/devtools "1.0.0"]
