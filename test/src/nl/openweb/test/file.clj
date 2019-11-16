@@ -10,7 +10,7 @@
 (defonce rows (atom []))
 (defonce writer (atom nil))
 (defonce keep-writing (atom true))
-(def base-file-name "linger-ms-25-")
+(def base-file-name "lacinia-pedestal-0_13-alpha_1-")
 
 (defn get-path
   [name]

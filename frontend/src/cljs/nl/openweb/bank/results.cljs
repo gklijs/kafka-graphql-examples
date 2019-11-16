@@ -6,29 +6,38 @@
             [nl.openweb.bank.routes :as routes]
             [reagent.core :as r]))
 
-(def categories {:linger-ms-config "linger.ms config"})
+(def base-x-values {:average-latency           "Average latency (ms)"
+                    :max-latency               "Max latency (ms)"
+                    :min-latency               "Min latency (ms)"
+                    :99-latency                ".99 percentile latency (ms)"
+                    :average-generator-latency "Average generator latency (ms)"
+                    :max-generator-latency     "Max generator latency (ms)"
+                    :min-generator-latency     "Min generator latency (ms)"
+                    :99-generator-latency      ".99 percentile generator latency (ms)"
+                    :transactions              "Total amount of transactions (count)"
+                    :transactions-per-second   "Transactions per second (count/second)"
+                    :average-ch-cpu            "Average cpu command-handler (% from total)"
+                    :average-ch-mem            "Average mem command-handler (MiB)"
+                    :average-kb-cpu            "Average cpu kafka broker (% from total)"
+                    :average-kb-mem            "Average mem kafka broker (MiB)"
+                    :average-ge-cpu            "Average cpu graphql endpoint (% from total)"
+                    :average-ge-mem            "Average mem graphql endpoint (MiB)"
+                    :data-points               "Amount of measurements (count)"})
 
-(def x-values {:average-latency           "Average latency (ms)"
-               :max-latency               "Max latency (ms)"
-               :min-latency               "Min latency (ms)"
-               :99-latency                ".99 percentile latency (ms)"
-               :average-generator-latency "Average generator latency (ms)"
-               :max-generator-latency     "Max generator latency (ms)"
-               :min-generator-latency     "Min generator latency (ms)"
-               :99-generator-latency      ".99 percentile generator latency (ms)"
-               :transactions              "Total amount of transactions (count)"
-               :transactions-per-second   "Transactions per second (count/second)"
-               :average-db-ch-cpu         "Average cpu handler database (% from total)"
-               :average-db-ch-mem         "Average mem handler database (MiB)"
-               :average-db-ge-cpu         "Average cpu endpoint database (% from total)"
-               :average-db-ge-mem         "Average mem endpoint database (MiB)"
-               :average-ch-cpu            "Average cpu command-handler (% from total)"
-               :average-ch-mem            "Average mem command-handler (MiB)"
-               :average-kb-cpu            "Average cpu kafka broker (% from total)"
-               :average-kb-mem            "Average mem kafka broker (MiB)"
-               :average-ge-cpu            "Average cpu graphql endpoint (% from total)"
-               :average-ge-mem            "Average mem graphql endpoint (MiB)"
-               :data-points               "Amount of measurements (count)"})
+(def x-values-v1
+  (-> base-x-values
+      (assoc :average-db-cpu "Average cpu database (% from total)")
+      (assoc :average-db-mem "Average mem database (MiB)")))
+
+(def x-values-v2
+  (-> base-x-values
+      (assoc :average-db-ch-cpu "Average cpu handler database (% from total)")
+      (assoc :average-db-ch-mem "Average mem handler database (MiB)")
+      (assoc :average-db-ge-cpu "Average cpu endpoint database (% from total)")
+      (assoc :average-db-ge-mem "Average mem endpoint database (MiB)")))
+
+(def categories {:linger-ms-config ["linger.ms config" x-values-v1]
+                 :lacinia          ["different releases of lacinia" x-values-v2]})
 
 (defn select-button
   [category x-value is-change-category]
@@ -40,10 +49,14 @@
 
 (defn selection
   [results]
-  (let [{:keys [category x-value]} results]
+  (let [{:keys [category x-value]} results
+        x-values (second (category categories))]
     [:div.content
-     [:p "Selected category:\u00A0" [:strong (category categories)]]
+     [:p "Selected category:\u00A0" [:strong (first (category categories))]]
      [:p "Selected x-value:\u00A0" [:strong (x-value x-values)]]
+     [:p "Select category:"]
+     [:div.buttons (for [new-category-value (keys (dissoc categories category))]
+                     (select-button (name new-category-value) (name x-value) true))]
      [:p "Select x-value:"]
      [:div.buttons (for [new-x-value (keys (dissoc x-values x-value))]
                      (select-button (name category) (name new-x-value) false))]]))
@@ -84,8 +97,9 @@
 (defn get-spec
   [c-value y-value]
   (let [data-url (str "/data/" (name c-value) ".json")
-        c-name (c-value categories)
+        c-name (first (c-value categories))
         y-name (name y-value)
+        x-values (second (c-value categories))
         y-title (y-value x-values)
         y-err (clojure.string/replace y-name #"average" "err")]
     (if (= y-err y-name)
