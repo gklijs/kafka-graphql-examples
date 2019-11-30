@@ -33,15 +33,12 @@
      {:target "_blank", :href "https://www.openweb.nl"}
      [:span.icon {:style {:color "#95c23d"}} [:i.mdi.mdi-24px.mdi-domain]]]
     [:a.navbar-item.is-hidden-desktop
-     {:target "_blank", :href "https://twitter.com/OpenWebNL"}
-     [:span.icon {:style {:color "#1da1f2"}} [:i.mdi.mdi-24px.mdi-twitter]]]
-    [:a.navbar-item.is-hidden-desktop
      {:target "_blank", :href "https://www.linkedin.com/company/open-web-it-services/"}
      [:span.icon {:style {:color "#0077B5"}} [:i.mdi.mdi-24px.mdi-linkedin-box]]]
     [:a.navbar-item.is-hidden-desktop
      {:target "_blank", :href "https://github.com/openweb-nl/kafka-graphql-examples"}
      [:span.icon {:style {:color "#24292e"}} [:i.mdi.mdi-24px.mdi-github-circle]]]
-    [:button.button.navbar-burger
+    [:div.navbar-burger.burger
      {:on-click #(re-frame/dispatch [::events/toggle-mob-expand])
       :class    (when expand "is-active")}
      [:span]
