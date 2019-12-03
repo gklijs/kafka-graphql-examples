@@ -1,0 +1,7 @@
+{:max-interaction-time        5000
+ :min-loop-time               500
+ :max-loops                   360
+ :max-time-outs               10
+ :loops-to-generate-generator 10
+ :loops-for-success           300
+ :base-test-file-name         "demo-"}

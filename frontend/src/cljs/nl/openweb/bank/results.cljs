@@ -37,7 +37,8 @@
       (assoc :average-db-ge-mem "Average mem endpoint database (MiB)")))
 
 (def categories {:linger-ms-config ["linger.ms config" x-values-v1]
-                 :lacinia          ["different releases of lacinia" x-values-v2]})
+                 :lacinia          ["different releases of lacinia" x-values-v2]
+                 :graphql-servers  ["different graphql server implementations" x-values-v2]})
 
 (defn select-button
   [category x-value is-change-category]
