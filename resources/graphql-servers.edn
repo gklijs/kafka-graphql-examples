@@ -1,4 +1,4 @@
-{:mapping {"lacinia-pedestal"             "full-*"
-           "graphql-spring-boot-starter"  "java-*"
-           "graphql spring boot + memory" "javaxm-*"
-           "graphql-kotlin" "kotlin-*"}}
+{:mapping {"lacinia-pedestal"            "full-*"
+           "graphql-spring-boot-starter" "java-*"
+           "graphql-kotlin"              "kotlin-*"
+           "micronaut"                   "micronaut-*"}}
