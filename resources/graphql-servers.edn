@@ -1,4 +1,0 @@
-{:mapping {"lacinia-pedestal"            "full-*"
-           "graphql-spring-boot-starter" "java-*"
-           "graphql-kotlin"              "kotlin-*"
-           "micronaut"                   "micronaut-*"}}

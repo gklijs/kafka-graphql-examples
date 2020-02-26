@@ -38,7 +38,8 @@
 
 (def categories {:linger-ms-config ["linger.ms config" x-values-v1]
                  :lacinia          ["different releases of lacinia" x-values-v2]
-                 :graphql-servers  ["different graphql server implementations" x-values-v2]})
+                 :graphql-servers-jan  ["different graphql server implementations tested in january 2020" x-values-v2]
+                 :graphql-servers-feb  ["different graphql server implementations tested in february 2020" x-values-v2]})
 
 (defn select-button
   [category x-value is-change-category]
